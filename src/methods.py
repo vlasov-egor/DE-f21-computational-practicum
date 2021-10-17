@@ -2,14 +2,15 @@ import math
 from dataclasses import dataclass
 
 
+@dataclass
 class NumericalMethod:
 
     x_0: float
     y_0: float
     x_range: float
 
-    def differential_equation(x_0: float, y_0: float) -> float:
-        (math.exp**y_0 - 2 / x_0)
+    def differential_equation(self, x: float, y: float) -> float:
+        return math.exp(y) - 2 / x
 
     def get_approximation():
         pass
@@ -19,7 +20,7 @@ class NumericalMethod:
 
 
 class EulerMethod(NumericalMethod):
-    def calculate(self) -> list(tuple(float, float)):
+    def calculate(self) -> list:
 
         print("Euler Method")
         h = 1
@@ -28,21 +29,21 @@ class EulerMethod(NumericalMethod):
 
         data = [(self.x_0, self.y_0)]
 
-        print(
-            f"""Current x: {float("{:.4f}".format(self.x_0))}\nCurrent y: {float("{:.4f}".format(self.y_0))}"""
-        )
+        print("Current x: {}\nCurrent y: {}".format(
+            float("{:.4f}".format(self.x_0)),
+            float("{:.4f}".format(self.y_0))))
 
-        data.append((float("{:.4f}".format(self.x_0),
-                           float("{:.4f}".format(self.y_0)))))
+        data.append((float("{:.4f}".format(self.x_0)),
+                     float("{:.4f}".format(self.y_0))))
 
         while x < self.x_range:
             y += h * self.differential_equation(x, y)
             x += h
 
-            print(
-                f"""Current x: {float("{:.4f}".format(x))}\nCurrent y: {float("{:.4f}".format(y))}"""
-            )
-            data.append((float("{:.4f}".format(x), float("{:.4f}".format(y)))))
+            print("Current x: {}\nCurrent y: {}".format(
+                float("{:.4f}".format(x)), float("{:.4f}".format(y))))
+
+            data.append((float("{:.4f}".format(x)), float("{:.4f}".format(y))))
 
         print("Approximate solution at x = {:.4f} is {:.4f}".format(x, y))
         return data
@@ -52,7 +53,7 @@ class EulerMethod(NumericalMethod):
 
 
 class ImprovedEulerMethod(NumericalMethod):
-    def calculate(self) -> list(tuple(float, float)):
+    def calculate(self) -> list:
 
         print("Improved Euler Method")
         h = 1
@@ -64,23 +65,22 @@ class ImprovedEulerMethod(NumericalMethod):
 
         data = [(self.x_0, self.y_0)]
 
-        print(
-            f"""Current x: {float("{:.4f}".format(self.x_0))}\nCurrent y: {float("{:.4f}".format(self.y_0))}"""
-        )
+        print("Current x: {}\nCurrent y: {}".format(
+            float("{:.4f}".format(self.x_0)),
+            float("{:.4f}".format(self.y_0))))
 
-        data.append((float("{:.4f}".format(self.x_0),
-                           float("{:.4f}".format(self.y_0)))))
+        data.append((float("{:.4f}".format(self.x_0)),
+                     float("{:.4f}".format(self.y_0))))
 
         while (x < self.x_range):
             k1 = h2 * self.differential_equation(x, y)
             y += h * self.differential_equation(x + h2, y + k1)
             x += h
 
-            print(
-                f"""Current x: {float("{:.4f}".format(x))}\nCurrent y: {float("{:.4f}".format(y))}"""
-            )
+            print("Current x: {}\nCurrent y: {}".format(
+                float("{:.4f}".format(x)), float("{:.4f}".format(y))))
 
-            data.append((float("{:.4f}".format(x), float("{:.4f}".format(y)))))
+            data.append((float("{:.4f}".format(x)), float("{:.4f}".format(y))))
 
         print("Approximate solution at x = {:.4f} is {:.4f}".format(x, y))
         return data
@@ -90,7 +90,7 @@ class ImprovedEulerMethod(NumericalMethod):
 
 
 class RungeKuttaMethod(NumericalMethod):
-    def calculate(self) -> list(tuple(float, float)):
+    def calculate(self) -> list:
 
         print("Runge Kutta Method")
         h = 1
@@ -102,12 +102,12 @@ class RungeKuttaMethod(NumericalMethod):
 
         data = [(self.x_0, self.y_0)]
 
-        print(
-            f"""Current x: {float("{:.4f}".format(self.x_0))}\nCurrent y: {float("{:.4f}".format(self.y_0))}"""
-        )
+        print("Current x: {}\nCurrent y: {}".format(
+            float("{:.4f}".format(self.x_0)),
+            float("{:.4f}".format(self.y_0))))
 
-        data.append((float("{:.4f}".format(self.x_0),
-                           float("{:.4f}".format(self.y_0)))))
+        data.append((float("{:.4f}".format(self.x_0)),
+                     float("{:.4f}".format(self.y_0))))
 
         while (x < self.x_range):
             dy1 = h * self.differential_equation(x, y)
@@ -117,11 +117,11 @@ class RungeKuttaMethod(NumericalMethod):
 
             x += h
             y += (dy1 + 2.0 * (dy2 + dy3) + dy4) / 6.0
-            print(
-                f"""Current x: {float("{:.4f}".format(x))}\nCurrent y: {float("{:.4f}".format(y))}"""
-            )
 
-            data.append((float("{:.4f}".format(x), float("{:.4f}".format(y)))))
+            print("Current x: {}\nCurrent y: {}".format(
+                float("{:.4f}".format(x)), float("{:.4f}".format(y))))
+
+            data.append((float("{:.4f}".format(x)), float("{:.4f}".format(y))))
 
         print("Approximate solution at x = {:.4f} is {:.4f}".format(x, y))
         return data
