@@ -78,7 +78,9 @@ class EulerSolution(Solution):
         data.append((float("{:.4f}".format(self.x_0)),
                      float("{:.4f}".format(self.y_0))))
 
-        while x < self.x_range:
+        print("---------Euler---------\n")
+        while x <= self.x_range:
+            print("x = {}\ny = {}".format(x, y))
             y += h * self.differential_equation(x, y)
             x += h
 
@@ -101,7 +103,9 @@ class ImprovedEulerSolution(Solution):
                      float("{:.4f}".format(self.y_0))))
 
         k1 = 0
-        while x < self.x_range:
+        print("---------Improved Euler---------\n")
+        while x <= self.x_range:
+            print("x = {}\ny = {}".format(x, y))
             k1 = h2 * self.differential_equation(x, y)
             y += h * self.differential_equation(x + h2, y + k1)
             x += h
@@ -125,7 +129,9 @@ class RungeKuttaSolution(Solution):
                      float("{:.4f}".format(self.y_0))))
 
         dy1 = dy2 = dy3 = dy4 = 0
-        while x < self.x_range:
+        print("---------RungeKutta---------\n")
+        while x <= self.x_range:
+            print("x = {}\ny = {}".format(x, y))
             dy1 = h * self.differential_equation(x, y)
             dy2 = h * self.differential_equation(x + h / 2.0, y + dy1 / 2.0)
             dy3 = h * self.differential_equation(x + h / 2.0, y + dy2 / 2.0)
