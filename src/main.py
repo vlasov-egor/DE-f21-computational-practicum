@@ -34,18 +34,18 @@ class MainWindow(QWidget):
 
         self.setupUi()
 
-    def editBox(self, label):
+    def editBox(self, label: str):
         edit = QLineEdit()
         edit.setValidator(self.doubleValidator)
 
         label = QLabel(label)
-        
+
         box = QVBoxLayout()
         box.addWidget(label)
         box.addWidget(edit)
 
         return edit, box
-    
+
     def setupUi(self):
         self.setWindowTitle("DE Egor Vlasov")
 
@@ -55,7 +55,7 @@ class MainWindow(QWidget):
         exact__solution = ExactSolution(0, 0, 0, 0)
 
         x_0__edit, x_0__box = self.editBox("x_0")
-        y_0__edit, y_0__box = self.editBox("y_0")        
+        y_0__edit, y_0__box = self.editBox("y_0")
         x_range__edit, x_range__box = self.editBox("x_range")
         n__edit, n__box = self.editBox("n")
         n__edit.setValidator(self.intValidator)
@@ -145,7 +145,7 @@ class MainWindow(QWidget):
 
         gte_errors__canvas = FigureCanvas(self.gte_errors__figure)
         gte_errors__toolbar = NavigationToolbar(gte_errors__canvas, self)
-        
+
         calculate__button = QPushButton("Calculate")
         calculate_gte__button = QPushButton("Calculate")
 
@@ -154,29 +154,36 @@ class MainWindow(QWidget):
             improved_euler_points = improved_euler__solution.calculate()
             runge_kutta_points = runge_kutta__solution.calculate()
             exact_points = exact__solution.calculate()
-            
+
             self.solutions__figure.clear()
 
             ax = self.solutions__figure.add_subplot(111)
 
-            ax.plot(*reduce(pyplotify, euler_points, ([],[])), label="Euler Solution")
-            ax.plot(*reduce(pyplotify, improved_euler_points, ([],[])), label="Improved Euler Solution")
-            ax.plot(*reduce(pyplotify, runge_kutta_points, ([],[])), label="Runge Kutta Solution")
-            ax.plot(*reduce(pyplotify, exact_points, ([],[])), label="Exact Solution")
+            ax.plot(*reduce(pyplotify, euler_points, ([], [])),
+                    label="Euler Solution")
+            ax.plot(*reduce(pyplotify, improved_euler_points, ([], [])),
+                    label="Improved Euler Solution")
+            ax.plot(*reduce(pyplotify, runge_kutta_points, ([], [])),
+                    label="Runge Kutta Solution")
+            ax.plot(*reduce(pyplotify, exact_points, ([], [])),
+                    label="Exact Solution")
 
             ax.legend()
 
             euler_lte = exact__solution.calculate_lte(euler_points)
-            improved_euler_lte = exact__solution.calculate_lte(improved_euler_points)
+            improved_euler_lte = exact__solution.calculate_lte(
+                improved_euler_points)
             runge_kutta_lte = exact__solution.calculate_lte(runge_kutta_points)
 
             self.lte_errors__figure.clear()
 
             ax = self.lte_errors__figure.add_subplot(111)
 
-            ax.plot(*reduce(pyplotify, euler_lte, ([],[])), label="Euler LTE")
-            ax.plot(*reduce(pyplotify, improved_euler_lte, ([],[])), label="Improved Euler LTE")
-            ax.plot(*reduce(pyplotify, runge_kutta_lte, ([],[])), label="Runge Kutta LTE")
+            ax.plot(*reduce(pyplotify, euler_lte, ([], [])), label="Euler LTE")
+            ax.plot(*reduce(pyplotify, improved_euler_lte, ([], [])),
+                    label="Improved Euler LTE")
+            ax.plot(*reduce(pyplotify, runge_kutta_lte, ([], [])),
+                    label="Runge Kutta LTE")
 
             ax.legend()
 
@@ -185,21 +192,24 @@ class MainWindow(QWidget):
 
         def calculate_gte():
             euler_gte = exact__solution.calculate_gte(euler__solution)
-            improved_euler_gte = exact__solution.calculate_gte(improved_euler__solution)
-            runge_kutta_gte = exact__solution.calculate_gte(runge_kutta__solution)
+            improved_euler_gte = exact__solution.calculate_gte(
+                improved_euler__solution)
+            runge_kutta_gte = exact__solution.calculate_gte(
+                runge_kutta__solution)
 
             self.gte_errors__figure.clear()
 
             ax = self.gte_errors__figure.add_subplot(111)
 
-            ax.plot(*reduce(pyplotify, euler_gte, ([],[])), label="Euler GTE")
-            ax.plot(*reduce(pyplotify, improved_euler_gte, ([],[])), label="Improved Euler GTE")
-            ax.plot(*reduce(pyplotify, runge_kutta_gte, ([],[])), label="Runge Kutta GTE")
+            ax.plot(*reduce(pyplotify, euler_gte, ([], [])), label="Euler GTE")
+            ax.plot(*reduce(pyplotify, improved_euler_gte, ([], [])),
+                    label="Improved Euler GTE")
+            ax.plot(*reduce(pyplotify, runge_kutta_gte, ([], [])),
+                    label="Runge Kutta GTE")
 
             ax.legend()
 
             gte_errors__canvas.draw()
-
 
         calculate__button.clicked.connect(calculate)
         calculate_gte__button.clicked.connect(calculate_gte)

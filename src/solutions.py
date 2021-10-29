@@ -24,8 +24,8 @@ class ExactSolution(Solution):
     exact: Callable[[float], float]
 
     def precalculate(self):
-        self.c = (math.pow(math.e, -self.y_0) - self.x_0) / self.x_0 ** 2
-        self.exact = lambda x: -math.log(self.c * x ** 2 + x)
+        self.c = (math.pow(math.e, -self.y_0) - self.x_0) / self.x_0**2
+        self.exact = lambda x: -math.log(self.c * x**2 + x)
 
     def calculate(self) -> list:
         self.precalculate()
@@ -42,13 +42,14 @@ class ExactSolution(Solution):
             y = self.exact(x)
 
             data.append((float("{:.4f}".format(x)), float("{:.4f}".format(y))))
-        
+
         return data
 
-    def calculate_lte(self, points):
+    def calculate_lte(self, points: list):
         self.precalculate()
 
-        return map(lambda point: (point[0], self.exact(point[0]) - point[1]), points)
+        return map(lambda point: (point[0], self.exact(point[0]) - point[1]),
+                   points)
 
     def calculate_gte(self, solution):
         self.precalculate()
@@ -63,7 +64,7 @@ class ExactSolution(Solution):
             points.append((n, abs(self.exact(point[0]) - point[1])))
 
         solution.n = old_n
-        
+
         return points
 
 
